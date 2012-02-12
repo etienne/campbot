@@ -10,7 +10,7 @@ class CampBot < Sinatra::Base
     payload['commits'].each do |commit|
       puts "Commit message = #{commit['message'].inspect}"
       if commit['message'] =~ /(fixes?|closes?) (\d+)/i
-        puts "Matching commit."
+        puts "Matching commit, TodoItem id = #{$1}"
         t = Basecamp::TodoItem.find($1)
         t.complete!
       end
