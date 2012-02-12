@@ -12,11 +12,8 @@ class CampBot < Sinatra::Base
         todo_item_id = $1
         t = Basecamp::TodoItem.find(todo_item_id)
         if t.complete!
-          puts "author name = #{commit['author']['name']}"
-          puts "commit url = #{commit['url']}"
-          puts "commit id = #{commit['id'][0..9]}"
-          comment = "Completed by #{commit['author']['name']} in commit <a href=\"#{commit['url']}\">#{commit['id'][0..9]}</a>"
-          Basecamp::Comment.create(:todo_item_id => todo_item_id, :contents => comment)
+          comment = "Completed by #{commit['author']['name']} in commit <a href=\"#{commit['url']}\">#{commit['id'][0..6]}</a>"
+          Basecamp::Comment.create(:todo_item_id => todo_item_id, :body => comment)
         end
       end
     end
