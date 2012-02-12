@@ -8,7 +8,9 @@ class CampBot < Sinatra::Base
     push = JSON.parse(params[:payload])
     halt 400 if push['repository']['url'] != ENV['GITHUB_REPO']
     push['commits'].each do |commit|
+      puts "Commit."
       if commit['message'] =~ /(fixes?|closes?) (\d+)/
+        puts "Matching commit."
         t = Basecamp::TodoItem.find($1)
         t.complete!
       end
