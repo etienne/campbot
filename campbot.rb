@@ -4,9 +4,9 @@ class CampBot < Sinatra::Base
   end
   
   post '/' do
-    Basecamp.establish_connection!(ENV['BASECAMP_URL'], ENV['BASECAMP_LOGIN'], ENV['BASECAMP_PASSWORD'])
+    Basecamp.establish_connection!(ENV['BASECAMP_URL'], ENV['BASECAMP_LOGIN'], ENV['BASECAMP_PASSWORD'], true)
     push = JSON.parse(params[:payload])
-    puts "----------------- #{push['repository']['url']}"
+    puts "----------------- repo url = #{push['repository']['url']}"
     halt 400 if push['repository']['url'] != ENV['GITHUB_REPO']
     push['commits'].each do |commit|
       puts "Commit."
